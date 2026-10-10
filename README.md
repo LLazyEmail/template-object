@@ -1,62 +1,46 @@
 # template-object
 
-`yarn add email-template-object`
+`npm install email-template-object` or `yarn add email-template-object`
 
+Built with **TypeScript**, bundled with **tsup**, tested with **Vitest**.
 
-We need to have
+## Goals
 
-- A tree like structure for rendering components in "recursive" way
+- A tree like structure for rendering components in a "recursive" way
+- Ability to add checks and return errors
+- An `isError` flag to understand if everything is ok
+- Be able to return data
+- Merge with previous test cases
+- Better handling of subcomponents
+- Have a template object that can also be used as source
 
-- An ability to add checks with returning errors.
+## Development
 
-- An ability to have isError variable that will help us to understand if everything is ok or not.
-
-- be able to return data.
-
-- merge it with test cases that we had before.
-
-- think how to handle subcomponents better.
-
-- have a template object that we can use as source too
-
-
-
-
-
-[
-](https://stackoverflow.com/questions/60048450/object-constructor-from-template-object)
-
-https://github.com/sindresorhus/object-assign
-
-
-```
-import displayFactoryTwo from './factoryTwo';
-
-// const settings = {
-//     component: "",
-    
-//     params: {},
-    
-// }
-
-// const EmptyTemplateFactory = new displayFactoryTwo();
-
-// export default EmptyTemplateFactory.create(settings);
-
+```bash
+npm install
+npm run build      # uses tsup
+npm test           # uses vitest
+npm run typecheck  # tsc --noEmit
+npm run dev        # tsup in watch mode
 ```
 
-----
+## Build outputs
 
-#### Arthur Tkachenko articles
+- `dist/index.js` — ESM
+- `dist/index.cjs` — CommonJS
+- `dist/index.global.js` — IIFE (browser)
+- `dist/index.d.ts` — TypeScript declarations
 
-* [https://hackernoon.com/5-reasons-why-newsletters-should-be-part-of-your-business-strategy](https://hackernoon.com/5-reasons-why-newsletters-should-be-part-of-your-business-strategy)
-* [https://hackernoon.com/organizing-an-advanced-structure-for-html-email-template](https://hackernoon.com/organizing-an-advanced-structure-for-html-email-template)
-* [https://hackernoon.com/how-i-started-to-build-react-components-for-email-templates](https://hackernoon.com/how-i-started-to-build-react-components-for-email-templates)
-* [https://hackernoon.com/introducing-a-simple-npm-module-with-email-templates](https://hackernoon.com/introducing-a-simple-npm-module-with-email-templates)
-* [https://hackernoon.com/glossary-for-non-technies](https://hackernoon.com/glossary-for-non-technies)
-* [https://hackernoon.com/email-marketing-and-how-to-curate-an-effective-business-newsletter](https://hackernoon.com/email-marketing-and-how-to-curate-an-effective-business-newsletter)
-* [https://hackernoon.com/exploring-substack-for-building-your-newsletter](https://hackernoon.com/exploring-substack-for-building-your-newsletter)
-* [https://hackernoon.com/building-a-design-system-for-email-templates-react](https://hackernoon.com/building-a-design-system-for-email-templates-react)
-* [https://hackernoon.com/together4victory-list-of-email-marketing-tools](https://hackernoon.com/together4victory-list-of-email-marketing-tools)
-* [https://hackernoon.com/cool-newsletters-for-developers-part-1](https://hackernoon.com/cool-newsletters-for-developers-part-1)
-* [https://hackernoon.com/cool-resources-for-sending-emails](https://hackernoon.com/cool-resources-for-sending-emails)
+## Example
+
+```ts
+import { factoryFour } from 'email-template-object';
+
+const settings = {
+  component: (params: any) => `Hello ${params.name}`,
+  params: { name: 'World' }
+};
+
+const factory = factoryFour(settings);
+console.log(factory.display());
+```

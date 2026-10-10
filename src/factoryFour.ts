@@ -1,3 +1,9 @@
+interface FactorySettings {
+  component: (params: any, subcomponents?: any) => any;
+  params: Record<string, any>;
+  subcomponents?: any;
+}
+
 class factoryFour2 {
 //     constructor(component, params) {
         
@@ -15,7 +21,7 @@ class factoryFour2 {
 
 // I want factory to return an object that can be changable.
 
-function factoryFour(settings){
+function factoryFour(settings: FactorySettings){
 
 
     const { component, params, subcomponents } = settings;
@@ -25,7 +31,7 @@ function factoryFour(settings){
 
         params,
         // plateNO,
-        changeParams(value){
+        changeParams(value: Partial<typeof params>){
             this.params = Object.assign(this.params, value);
         },
         start () {
