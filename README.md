@@ -24,6 +24,16 @@ npm run typecheck  # tsc --noEmit
 npm run dev        # tsup in watch mode
 ```
 
+## CI / GitHub Actions
+
+| Workflow | File | When it runs | What it does |
+| --- | --- | --- | --- |
+| Node.js CI | `node.js.yml` | push and PR to `main` | `npm ci`, `npm run build` (tsup) and `npm test` (Vitest) on Node 20, 22 and 24. `npm ci` needs `package-lock.json` in sync with `package.json`; after changing dependencies run `npm install` and commit the lockfile. |
+| CodeQL | `codeql.yml` | push and PR to `main`, plus a weekly schedule | GitHub code scanning; findings show under Security → Code scanning. |
+| Node.js Package | `npm-publish.yml` | when a GitHub release is created | Runs the tests on Node 22, then `npm publish` with the `npm_token` secret. |
+
+`yarn.lock` is a leftover from the pre-TypeScript setup; CI only uses npm and `package-lock.json`.
+
 ## Build outputs
 
 - `dist/index.js` — ESM
